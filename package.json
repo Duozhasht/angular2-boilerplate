@@ -3,7 +3,10 @@
 	"version": "1.0.0",
 	"description": "My personal config for angular2 + es6 (with es7 decorators) + webpack",
 	"scripts": {
-		"start": "webpack-dev-server --progress --colors"
+		"start": "npm run dev",
+		"dev" : "webpack-dev-server --progress --colors",
+		"build" : "webpack --display-error-details --progress",
+		"postinstall": "npm run dev"
 	},
 	"repository": {
 		"type": "git",

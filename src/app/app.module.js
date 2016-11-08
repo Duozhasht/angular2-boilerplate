@@ -7,15 +7,18 @@ import { HttpManager } from './services/http.manager.js';
 import { MockService } from './services/mock.service.js';
 */
 import { AppComponent } from './app.component.js';
-//import { ComponentsModule } from './components/components.module.js';
-//import { AppRoutingModule } from './app.routing.module.js';
+import { ComponentsModule } from './components/components.module.js';
+import { AppRoutingModule } from './app.routing.module.js';
+
+
 
 @NgModule({
   imports: [
     BrowserModule,
+    AppRoutingModule,
+    ComponentsModule
   ],
   declarations: [ AppComponent ],
-
   bootstrap: [ AppComponent ]
 })
 export class AppModule {}

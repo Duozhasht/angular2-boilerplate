@@ -1,31 +1,41 @@
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var CleanPlugin = require('clean-webpack-plugin');
 var path = require('path');
+/*
 var folders = {
 	NPM: path.resolve(__dirname, './node_modules')
 }
+*/
 
-var CleanPlugin = require('clean-webpack-plugin');
 var appEnv = process.env.NODE_ENV || 'development';
+
+if (appEnv === 'production') {
+	config.plugins.push(
+		// Remove build related folders
+		new CleanPlugin(['dist'])
+	);
+}
+
 
 var config = {
 
 	entry: {
-		//route for app
-		app: './src/app/main.js',
-		//external imports (zone rxjs)
-		vendor: './src/app/vendor.js'
+		//polyfills: './src/polyfills.js',
+		vendor: './src/vendor.js',
+		app: './src/app/main.js'
 	},
 	output: {
 		path: __dirname + '/dist',
-		publicPath: '/',
+		publicPath: 'http://localhost:8080/',
 		filename: "[name].bundle.js"
 	},
-	debug: true,
-	devtool: 'source-map-inline',
-
 	module: {
 		loaders: [
-      		// load and compile javascript
+			{
+				test: /\.html$/,
+				exclude: /node_modules/,
+				loader: "raw"
+			},
 			{
 				test: /\.js$/,
 				exclude: /node_modules/,
@@ -35,13 +45,7 @@ var config = {
 					plugins: ['transform-decorators-legacy'],
 					presets: ['es2015']
 				}
-      		},
-      		//compile index.html
-			{
-				test: /\.html$/,
-				exclude: /node_modules/,
-				loader: "raw"
-			},
+      		}
 
     ]
 	},
@@ -58,18 +62,14 @@ var config = {
 	// webpack dev server configuration
 	devServer: {
 		contentBase: "./src",
-		noInfo: false,
-		hot: false
-	}
+		inline: true,
+		//noInfo: false,
+		//hot: true,
+		//historyApiFallback: true,
+		stats: 'minimal'
+	},
+	debug: true,
+	devtool: 'source-map-inline'
 };
-
-
-
-if (appEnv === 'production') {
-	config.plugins.push(
-		// Remove build related folders
-		new CleanPlugin(['dist'])
-	);
-}
 
 module.exports = config;
