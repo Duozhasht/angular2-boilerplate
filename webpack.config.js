@@ -26,16 +26,11 @@ var config = {
 	},
 	output: {
 		path: __dirname + '/dist',
-		publicPath: 'http://localhost:8080/',
+		publicPath: 'http://localhost:3000/',
 		filename: "[name].bundle.js"
 	},
 	module: {
 		loaders: [
-			{
-				test: /\.html$/,
-				exclude: /node_modules/,
-				loader: "raw"
-			},
 			{
 				test: /\.js$/,
 				exclude: /node_modules/,
@@ -45,7 +40,17 @@ var config = {
 					plugins: ['transform-decorators-legacy'],
 					presets: ['es2015']
 				}
+      		},
+			{
+				test: /\.html$/,
+				exclude: /node_modules/,
+				loader: "raw"
+			},
+			      		{
+        		test: /\.scss$/,
+        		loader: 'raw-loader!sass-loader'
       		}
+
 
     ]
 	},
@@ -63,6 +68,7 @@ var config = {
 	devServer: {
 		contentBase: "./src",
 		inline: true,
+		port: 3000,
 		//noInfo: false,
 		//hot: true,
 		//historyApiFallback: true,
